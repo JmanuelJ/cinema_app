@@ -1,3 +1,5 @@
+import 'package:cinema_app/config/router/app_router.dart';
+import 'package:cinema_app/config/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -12,13 +14,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const Placeholder(),
+    return MaterialApp.router(
+      routerConfig: appRouter,
+      theme: AppTheme().getTheme(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
