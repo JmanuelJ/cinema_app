@@ -2,6 +2,7 @@ import 'package:cinema_app/config/constants/environment.dart';
 import 'package:cinema_app/domain/datasources/movies_datasource.dart';
 import 'package:cinema_app/domain/entities/movie.dart';
 import 'package:cinema_app/infrastructure/mappers/movie_mapper.dart';
+import 'package:cinema_app/infrastructure/models/moviedb/movie_details.dart';
 import 'package:cinema_app/infrastructure/models/moviedb/moviedb_response.dart';
 import 'package:dio/dio.dart';
 
@@ -54,5 +55,17 @@ class MoviedbDatasource extends MoviesDatasource {
         await dio.get('/movie/upcoming', queryParameters: {'page': page});
 
     return _jsonToMovies(response.data);
+  }
+
+  @override
+  Future<Movie> getMovieById(String id) async {
+    final response = await dio.get('/movie/$id');
+
+    if (response.statusCode != 200) throw Exception('Movie with id: $id not foun');
+
+    final movieDatails = MovieDetails.fromJson(response.data);
+    final Movie movie = MovieMapper.movieDetailsToEntity(movieDatails);
+
+    return movie;
   }
 }
