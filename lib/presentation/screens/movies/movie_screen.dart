@@ -43,10 +43,10 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
         physics: const ClampingScrollPhysics(),
         slivers: [
           _CustomSliverAppBar(movie: movie),
-          SliverList(delegate: SliverChildBuilderDelegate(
-            (context, index) => _MovieDetails(movie: movie),
-            childCount: 1
-          ))
+          SliverList(
+              delegate: SliverChildBuilderDelegate(
+                  (context, index) => _MovieDetails(movie: movie),
+                  childCount: 1))
         ],
       ),
     );
@@ -60,7 +60,7 @@ class _MovieDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
     final textStyles = Theme.of(context).textTheme;
 
     return Column(
@@ -75,18 +75,21 @@ class _MovieDetails extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 child: Image.network(
                   movie.posterPath,
-                  width: Size.width * 0.3,
+                  width: size.width * 0.3,
                 ),
               ),
-
-              const SizedBox(width: 10,),
-
+              const SizedBox(
+                width: 10,
+              ),
               SizedBox(
-                width: (Size.width - 40) * 0.7,
+                width: (size.width - 40) * 0.7,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(movie.title, style: textStyles.titleLarge,),
+                    Text(
+                      movie.title,
+                      style: textStyles.titleLarge,
+                    ),
                     Text(movie.overview)
                   ],
                 ),
@@ -94,22 +97,25 @@ class _MovieDetails extends StatelessWidget {
             ],
           ),
         ),
-
         Padding(
-          padding:const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Wrap(
             children: [
               ...movie.genreIds.map((gender) => Container(
-                margin: const EdgeInsets.only(right: 10),
-                child: Chip(label: Text(gender), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),),
-              ))
+                    margin: const EdgeInsets.only(right: 10),
+                    child: Chip(
+                      label: Text(gender),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
+                  ))
             ],
           ),
         ),
-
         _ACtorByMovie(movieId: movie.id.toString()),
-
-        const SizedBox(height: 50,)
+        const SizedBox(
+          height: 50,
+        )
       ],
     );
   }
